@@ -96,11 +96,11 @@ public class ChatServiceImpl implements ChatService {
             BotActionContent nextContents = contentRepository.findByContentId(choosenChoice.getNextContentId());
             
             if (choosenChoice.getChoiceType().equals(ChoiceType.NAME)) {
-                nextContents.setContentString(data+"가 상대 이름이구나..., "+ nextContents.getContentString());
+                nextContents.setContentString(data+ nextContents.getContentString());
             }
             
             else if (choosenChoice.getChoiceType().equals(ChoiceType.TEXT)) {
-                nextContents.setContentString(data+"가 더 알고싶구나....., "+ nextContents.getContentString());
+                nextContents.setContentString(data+ nextContents.getContentString());
             } 
             
             return nextContents;

@@ -48,7 +48,7 @@ public class ExampleInsertRunner implements CommandLineRunner {
         List<Bots> allBots = insertTwoBots();
         
         List<BotActions> bot1Actions = insertActionOf(allBots.get(0));
-        List<BotActions> bot2Actions = insertActionOf(allBots.get(1));
+        List<BotActions> bot2Actions = insertActionOf2(allBots.get(1));
         
         bot1Actions.stream().filter(a -> {
             return a.isOpen();
@@ -56,29 +56,14 @@ public class ExampleInsertRunner implements CommandLineRunner {
             
         });
         
+        insertChatInfoForChoice1OfBot1(bot1Actions);
+        insertChatInfoForChoice1OfBot2(bot2Actions);
+    }
+
+
+    private void insertChatInfoForChoice1OfBot1(List<BotActions> bot1Actions) {
         BotActions a = bot1Actions.get(0);
-        /*
-        Choices yes = new Choices("응 그래", null, null);
-        Choices no = new Choices("아니야", null, null);
         
-        BotActionContent ac = new BotActionContent("hi", a.getActionId(),
-                ChoiceType.BUTTON, ContentType.FIRST, 
-                Lists.newArrayList(yes, no));
-        
-        BotActionContent newAc = contentRepository.save(ac);
-        logger.info("action id is {}", newAc.getActionId());
-        
-        BotActionContent ac2 = new BotActionContent("okay bye", null,
-                ChoiceType.NONE, ContentType.LAST, 
-                null);
-        
-        BotActionContent newAc2 = contentRepository.save(ac2);
-        logger.info("action id is {}", newAc2.getActionId());
-        newAc.getChoices().stream().filter(c->c.getChoiceText().equals("아니야")).forEach(c -> c.setNextContentId(newAc2.getContentId()));
-       
-        //ac2.setChoices(Lists.newArrayList(no));
-        //logger.info("Result {}", newAc2);
-*/    
         BotActionContent ac = new BotActionContent("안녕, 애정운을 점쳐보자", a.getActionId(),
                 ChoiceType.BUTTON, ContentType.FIRST,
                 null);
@@ -91,7 +76,7 @@ public class ExampleInsertRunner implements CommandLineRunner {
                 ChoiceType.NAME, ContentType.MIDDLE,
                 null);
         
-        BotActionContent ac4 = new BotActionContent("카드 골라봐.", null,
+        BotActionContent ac4 = new BotActionContent("가 상대 이름이구나..., 카드 골라봐.", null,
                 ChoiceType.CARD, ContentType.MIDDLE,
                 null);
         
@@ -127,7 +112,7 @@ public class ExampleInsertRunner implements CommandLineRunner {
                 ChoiceType.NONE, ContentType.LAST,
                 null);
         
-        BotActionContent ac51 = new BotActionContent("그 궁금증 다른 운세에서 볼 수 있을 거야!", null,
+        BotActionContent ac51 = new BotActionContent("가 더 알고싶구나....., 그 궁금증 다른 운세에서 볼 수 있을 거야!", null,
                 ChoiceType.NONE, ContentType.LAST,
                 null);
         
@@ -190,7 +175,71 @@ public class ExampleInsertRunner implements CommandLineRunner {
         ac52.setChoices(Lists.newArrayList(text2, notext2));
     }
         
-    
+    private void insertChatInfoForChoice1OfBot2(List<BotActions> bot2Actions) {
+        BotActions a = bot2Actions.get(0);
+        
+        BotActionContent ac = new BotActionContent("누굴 욕해야 속이 씨원스레 뻥 뚤리겠으까? 할거야?", a.getActionId(),
+                ChoiceType.BUTTON, ContentType.FIRST,
+                null);
+        
+        BotActionContent ac2 = new BotActionContent("안할그면 와 했노!", null,
+                ChoiceType.NONE, ContentType.LAST,
+                null);
+        
+        BotActionContent ac3 = new BotActionContent("욕할 애 이름이 뭐고?", null,
+                ChoiceType.NAME, ContentType.MIDDLE,
+                null);
+        
+        BotActionContent ac4 = new BotActionContent("란 분이야?? 바보!!!", null,
+                ChoiceType.BUTTON, ContentType.MIDDLE,
+                null);
+        
+        BotActionContent ac41 = new BotActionContent("멍청이!! 어때, 속 시원히 풀렸으까?", null,
+                ChoiceType.BUTTON, ContentType.MIDDLE,
+                null);
+        
+        BotActionContent ac5 = new BotActionContent("자네도 욕해봐", null,
+                ChoiceType.TEXT, ContentType.MIDDLE,
+                null);
+
+        BotActionContent ac51 = new BotActionContent(", 얼씨구야 잘한데이~, 좋았으 그렇게 욕해야제. 잘했어. 수고해", null,
+                ChoiceType.NONE, ContentType.LAST,
+                null);
+        
+        BotActionContent ac52 = new BotActionContent("대화 마저 해", null,
+                ChoiceType.TEXT, ContentType.MIDDLE,
+                null);
+        
+        contentRepository.save(ac);
+        contentRepository.save(ac2);
+        contentRepository.save(ac3);
+        contentRepository.save(ac4);
+        contentRepository.save(ac41);
+        contentRepository.save(ac5);
+        contentRepository.save(ac51);
+        contentRepository.save(ac52);
+        
+        Choices yes = new Choices("욕해야지", ac3.getContentId(), ChoiceType.BUTTON);
+        Choices no = new Choices("아니 안해야지", ac2.getContentId(), ChoiceType.BUTTON);
+        ac.setChoices(Lists.newArrayList(yes, no));
+        
+        Choices name = new Choices("그놈의 이름은?", ac4.getContentId(), ChoiceType.NAME);
+        ac3.setChoices(Lists.newArrayList(name));
+        
+        Choices btn = new Choices("계속해. 옳소!", ac41.getContentId(), ChoiceType.BUTTON);
+        ac4.setChoices(Lists.newArrayList(btn));
+        
+        Choices normal = new Choices("거럼", ac5.getContentId(), ChoiceType.BUTTON);
+        ac41.setChoices(Lists.newArrayList(normal));
+        
+        Choices text = new Choices("", ac51.getContentId(), ChoiceType.TEXT);
+        Choices notext = new Choices("", ac52.getContentId(), ChoiceType.NONE);
+        ac5.setChoices(Lists.newArrayList(text, notext));
+        
+        Choices text2 = new Choices("", ac51.getContentId(), ChoiceType.TEXT);
+        Choices notext2 = new Choices("", ac52.getContentId(), ChoiceType.NONE);
+        ac52.setChoices(Lists.newArrayList(text2, notext2));
+    }
 
     private List<BotActions> insertActionOf(Bots bot) {
         int botId = bot.getBotId();
@@ -202,7 +251,21 @@ public class ExampleInsertRunner implements CommandLineRunner {
             actionRepository.save(action);
         });
         
-        List<BotActions> allBotAction = actionRepository.findAll();
+        List<BotActions> allBotAction = actionRepository.findByBotId(botId);
+        allBotAction.forEach(System.out::println);
+        
+        return allBotAction;
+    }
+    
+    private List<BotActions> insertActionOf2(Bots bot) {
+        int botId = bot.getBotId();
+        Stream.of(createBotActions("욕설"+botId, true, botId, true),
+                    createBotActions("칭찬"+botId, true, botId, false)
+                ).forEach(action -> {
+            actionRepository.save(action);
+        });
+        
+        List<BotActions> allBotAction = actionRepository.findByBotId(botId);
         allBotAction.forEach(System.out::println);
         
         return allBotAction;
