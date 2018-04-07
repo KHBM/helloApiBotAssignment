@@ -1,57 +1,64 @@
 package com.assign.contoller;
 
-import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.assign.repository.BotsRepository;
+import com.assign.constant.RequestURLs;
+import com.assign.domain.BotActionContent;
+import com.assign.domain.BotActions;
+import com.assign.domain.Bots;
+import com.assign.domain.Choices;
+import com.assign.service.ChatService;
 
 @RestController
-@RequestMapping("/post")
+@RequestMapping("/")
 public class ChatController {
-
-    /*private static final Logger logger = LoggerFactory.getLogger(ChatController.class);
-    O
+    
+    private final static Logger logger = LoggerFactory.getLogger(ChatController.class);
+    
     @Autowired
-    private BotsRepository chatRepository;
+    private ChatService chatService;
 
-    @RequestMapping("/write/{text}")
-    public Chat write(@PathVariable("text")String text) {
-        Chat chat = new Chat();
-        chat.setContent(text);
-        chat.setSubject("Deleted");
-        chat.setRegDate(new Date());
-        chatRepository.save(chat);
-        logger.info("new log created {}", chat);
-//        return "redirect:/post/" + chatRepository.save(chat).getChatIndex();
-        return chat;
+    @RequestMapping(value = RequestURLs.GET_BOTS, method=RequestMethod.GET)
+    public List<Bots> getBots() {
+        
+        return chatService.getAllBots();
     }
-
-    @RequestMapping("/list")
-    public List<Chat> list(Model model) {
-        List<Chat> postList = chatRepository.findAll();
-        model.addAttribute("postList", postList);
-        return postList;
+    
+    @GetMapping(RequestURLs.GET_BOT)
+    public Bots getBot(@PathVariable("bot")int botId) {
+        
+        return chatService.getBot(botId);
     }
-
-    @RequestMapping("/{id}")
-    public Chat view(Model model, @PathVariable int id) {
-        Chat chate = null;
-        try {
-            Chat chat = chatRepository.findByChatIndex(id);
-            model.addAttribute("post", chat);
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return chate;
-    }*/
+    
+    @GetMapping(RequestURLs.GET_ACTIONS)
+    public List<BotActions> getActions(@PathVariable("bot")int botId) {
+        
+        return chatService.getBotActions(botId);
+    }
+    
+    @GetMapping(RequestURLs.GET_ACTION_CONTENT)
+    public BotActionContent getActionContent(@PathVariable("bot")int botId, @PathVariable("action")int actionId) {
+        
+        return chatService.getActionContent(botId, actionId);
+    }
+    
+    @PutMapping(RequestURLs.FETCH_NEXT_CONTENT)
+    public BotActionContent fetchNextContent(@PathVariable("contentId")int contentId, @PathVariable("choiceId")int choiceId,
+            @RequestBody String choiceData) {
+        
+        //FIXME: Should I have to consider the type of choice made?
+        return chatService.getNextActionContent(contentId, choiceId, choiceData);
+        
+    }
 }

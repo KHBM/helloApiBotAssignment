@@ -7,4 +7,6 @@ import com.assign.domain.BotActionContent;
 public interface ActionContentRepository extends JpaRepository<BotActionContent, Integer>{
 
     BotActionContent findByContentId(int index);
+    
+    BotActionContent findByActionId(Integer actionId);
 }
