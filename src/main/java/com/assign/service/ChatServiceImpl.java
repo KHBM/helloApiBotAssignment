@@ -1,5 +1,6 @@
 package com.assign.service;
 
+import java.security.SecureRandom;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -35,6 +36,8 @@ public class ChatServiceImpl implements ChatService {
     private ChoicesRepository choiceRepository;
     @Autowired
     private SimpleChatDispatcher simpleChatDispatcher;
+    
+    private SecureRandom random = new SecureRandom();
     
     @PostConstruct
     public void postConstruct() {
@@ -81,19 +84,24 @@ public class ChatServiceImpl implements ChatService {
             Choices choosenChoice = null;
             choosenChoice = choices.stream().filter(c -> c.getChoiceId() == choiceId).findFirst().get();
             
+            if (choosenChoice.getChoiceType().equals(ChoiceType.CARD)) {
+                int size = choices.size();
+                int randNum = random.nextInt(size);
+                choosenChoice = choices.get(randNum);
+            }
            
             logger.info("{} is choosenChoice", choosenChoice);
             logger.info("{} is findBychoice", findByChoiceId);
             
             BotActionContent nextContents = contentRepository.findByContentId(choosenChoice.getNextContentId());
             
-            if(choosenChoice.getChoiceType().equals(ChoiceType.NAME)) {
+            if (choosenChoice.getChoiceType().equals(ChoiceType.NAME)) {
                 nextContents.setContentString(data+"가 상대 이름이구나..., "+ nextContents.getContentString());
             }
             
-            if(choosenChoice.getChoiceType().equals(ChoiceType.TEXT)) {
+            else if (choosenChoice.getChoiceType().equals(ChoiceType.TEXT)) {
                 nextContents.setContentString(data+"가 더 알고싶구나....., "+ nextContents.getContentString());
-            }
+            } 
             
             return nextContents;
         } catch (Exception e) {

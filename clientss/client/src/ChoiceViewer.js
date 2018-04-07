@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './App.css';
 import $ from 'jquery'
-
+const card = require('./card.png');
 
 class ChoiceViewer extends React.Component {
 
@@ -38,12 +38,13 @@ class ChoiceViewer extends React.Component {
 			  </div>
 		  );
 	  } else if(type == 'CARD') {
+		  var style_img = {width:"50px"};
 		  return (
 				<div>
 				{
 				  choices.map((choice) => 
 						<div key={choice.choiceId}>
-							<button onClick={(e) => this.props.requestNextContent(e, choice.contentId, choice.choiceId, choice.choiceId)}>CARD {choice.choiceText}</button>
+							<img src={card} style={style_img} onClick={(e) => this.props.requestNextContent(e, choice.contentId, choice.choiceId, choice.choiceId)}/>CARD {choice.choiceText}
 						</div>
 				  )
 				}

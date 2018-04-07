@@ -66,7 +66,6 @@ public class ChatController {
     public BotActionContent fetchNextContent(@PathVariable("contentId")int contentId, @PathVariable("choiceId")int choiceId,
             @RequestBody NickData choiceData) {
         
-        logger.info("YESSSSSSSSSSSSSSSSSSSSSSSSs {}", choiceData);
         //FIXME: Should I have to consider the type of choice made?
         return chatService.getNextActionContent(contentId, choiceId, choiceData.getNickName());
         
@@ -77,7 +76,6 @@ public class ChatController {
     public BotActionContent fetchNextContents(@PathVariable("contentId")int contentId, @PathVariable("choiceId")int choiceId,
             @PathVariable("data") String choiceData) {
         
-        //FIXME: Should I have to consider the type of choice made?
         return chatService.getNextActionContent(contentId, choiceId, choiceData);
         
     }

@@ -29897,7 +29897,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var logo = __webpack_require__(35);
+var logo = __webpack_require__(36);
 
 var App = function (_React$Component) {
 	_inherits(App, _React$Component);
@@ -30127,14 +30127,14 @@ var App = function (_React$Component) {
 					requestFreeChat: this.getRandomChat.bind(this)
 				});
 			}
-			var style_img = { witdh: "50px", height: "50px" };
+			//var style_img = {width:"50px",height:"50px"};
 			return React.createElement(
 				'div',
 				{ className: 'App' },
 				React.createElement(
 					'div',
 					{ className: 'App-header' },
-					React.createElement('img', { src: logo, style: style_img, className: 'App-logo', alt: 'logo' }),
+					React.createElement('img', { src: logo, className: 'App-logo', alt: 'logo' }),
 					React.createElement(
 						'h2',
 						null,
@@ -30912,6 +30912,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var card = __webpack_require__(35);
+
 var ChoiceViewer = function (_React$Component) {
 	_inherits(ChoiceViewer, _React$Component);
 
@@ -30981,6 +30983,7 @@ var ChoiceViewer = function (_React$Component) {
 					)
 				);
 			} else if (type == 'CARD') {
+				var style_img = { width: "50px" };
 				return React.createElement(
 					'div',
 					null,
@@ -30988,14 +30991,11 @@ var ChoiceViewer = function (_React$Component) {
 						return React.createElement(
 							'div',
 							{ key: choice.choiceId },
-							React.createElement(
-								'button',
-								{ onClick: function onClick(e) {
-										return _this2.props.requestNextContent(e, choice.contentId, choice.choiceId, choice.choiceId);
-									} },
-								'CARD ',
-								choice.choiceText
-							)
+							React.createElement('img', { src: card, style: style_img, onClick: function onClick(e) {
+									return _this2.props.requestNextContent(e, choice.contentId, choice.choiceId, choice.choiceId);
+								} }),
+							'CARD ',
+							choice.choiceText
 						);
 					})
 				);
@@ -31048,6 +31048,12 @@ exports.default = ChoiceViewer;
 
 /***/ }),
 /* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "06cf44a5706f6b3c675ab338c762ed13.png";
+
+/***/ }),
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "bd46ab07be9979783b233e7b824f9061.png";

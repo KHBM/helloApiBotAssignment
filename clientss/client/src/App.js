@@ -224,11 +224,11 @@ class App extends React.Component {
 				 />
 			 )
 	  }
-	  var style_img = {witdh:"50px",height:"50px"};
+	  //var style_img = {width:"50px",height:"50px"};
       return (
         <div className="App">
           <div className="App-header">
-            <img src={logo} style={style_img} className="App-logo" alt="logo" />
+            <img src={logo} className="App-logo" alt="logo" />
             <h2>환영합니다.</h2>
           </div>
           <BotSelect value={this.state.bots} isVisible={this.state.isVisible}

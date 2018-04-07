@@ -103,6 +103,10 @@ public class ExampleInsertRunner implements CommandLineRunner {
                 ChoiceType.BUTTON, ContentType.MIDDLE,
                 null);
         
+        BotActionContent ac43 = new BotActionContent("이 카드는?! 조커 카드야!! 이걸로 네가 할 수 있는 건 무궁해!! 곧 훈녀/훈남을 만나게 될거야.", null,
+                ChoiceType.BUTTON, ContentType.MIDDLE,
+                null);
+        
         BotActionContent ac5 = new BotActionContent("그렇구나, 더 궁금한 거 있어?", null,
                 ChoiceType.TEXT, ContentType.MIDDLE,
                 null);
@@ -137,6 +141,7 @@ public class ExampleInsertRunner implements CommandLineRunner {
         contentRepository.save(ac4);
         contentRepository.save(ac41);
         contentRepository.save(ac42);
+        contentRepository.save(ac43);
         contentRepository.save(ac5);
         contentRepository.save(ac51);
         contentRepository.save(ac52);
@@ -154,7 +159,8 @@ public class ExampleInsertRunner implements CommandLineRunner {
         
         Choices card1 = new Choices("카드1야", ac41.getContentId(), ChoiceType.CARD);
         Choices card2 = new Choices("카드2야", ac42.getContentId(), ChoiceType.CARD);
-        ac4.setChoices(Lists.newArrayList(card1, card2));
+        Choices card3 = new Choices("카드3야", ac43.getContentId(), ChoiceType.CARD);
+        ac4.setChoices(Lists.newArrayList(card1, card2, card3));
         
         Choices good = new Choices("맞는 거 같아.", ac6.getContentId(), ChoiceType.BUTTON);
         Choices normal = new Choices("그저 그래.", ac5.getContentId(), ChoiceType.BUTTON);
@@ -165,6 +171,11 @@ public class ExampleInsertRunner implements CommandLineRunner {
         Choices normal2 = new Choices("그저 그래.", ac5.getContentId(), ChoiceType.BUTTON);
         Choices bad2 = new Choices("맞지 않아", ac8.getContentId(), ChoiceType.BUTTON);
         ac42.setChoices(Lists.newArrayList(good2, normal2, bad2));
+        
+        Choices good3 = new Choices("맞는 거 같아.", ac6.getContentId(), ChoiceType.BUTTON);
+        Choices normal3 = new Choices("그저 그래.", ac5.getContentId(), ChoiceType.BUTTON);
+        Choices bad3 = new Choices("맞지 않아", ac8.getContentId(), ChoiceType.BUTTON);
+        ac43.setChoices(Lists.newArrayList(good3, normal3, bad3));
         
         Choices money = new Choices("여기 10만원", ac61.getContentId(), ChoiceType.BUTTON);
         Choices nomony = new Choices("나 돈 없어. 나중에.", ac62.getContentId(), ChoiceType.BUTTON);
