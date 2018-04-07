@@ -11,8 +11,9 @@ public class HomeController {
         return "index";
     }
     
-    @RequestMapping(value = "/dfg")
-    public String index2() {
+    
+    @RequestMapping(value = "/box")
+    public String index22() {
         return "index2";
     }
 }

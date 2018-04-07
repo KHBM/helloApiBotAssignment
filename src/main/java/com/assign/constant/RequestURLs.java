@@ -1,5 +1,11 @@
 package com.assign.constant;
 
+/**
+ * Containing all urls defined in this server.
+ * Note that there is pre-reserved url.
+ * @author kimilb
+ *
+ */
 public class RequestURLs {
 
     public static final String GET_BOTS = "/bots";

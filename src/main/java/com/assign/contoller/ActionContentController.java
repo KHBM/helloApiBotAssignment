@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.assign.domain.BotActionContent;
 import com.assign.repository.ActionContentRepository;
 
+/**
+ * This Controller is just for checking h2 database's content table data.
+ * @author kimilb
+ *
+ */
 @RestController
 @RequestMapping("/content")
 public class ActionContentController {
