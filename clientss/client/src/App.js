@@ -10,7 +10,7 @@ const logo = require('./ninja.png');
 
 class App extends React.Component {
 
-  constructor(props: any) {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -30,13 +30,13 @@ class App extends React.Component {
   componentDidMount() {
     this.setState({bots:{isLoading: true}});
 
-    fetch('http://localhost:3333/bots')
+    fetch('/bots')
     .then(response => response.json())
     .then(data => this.setState({bots:{bots: data, isLoading: false}}));
   }
 
   getActionss(e) {
-	  fetch('http://localhost:3333/actions/'+this.state.botId)
+	  fetch('/actions/'+this.state.botId)
 		 .then(rep => rep.json())
 		 .then(data => {
 			 console.log(data);
@@ -60,7 +60,7 @@ class App extends React.Component {
   getContents(e, actionId) {
 	  console.log("get content called");
 	  
-	  fetch('http://localhost:3333/content/'+this.state.botId +"/"+actionId)
+	  fetch('/content/'+this.state.botId +"/"+actionId)
 		 .then(rep => rep.json())
 		 .then(data => {
 			 console.log(data);
@@ -90,11 +90,19 @@ class App extends React.Component {
 	  console.log("get next content called");
 	  console.log("RE", this.state);
 	  console.log("get action called "+this.state.botId);
-	  fetch('http://localhost:3333/content/'+contentId+'/choice/'+choiceId+'/'+data, {
-			  method: 'GET'
-			  
+	  
+	  fetch('/content/'+contentId+'/choice/'+choiceId, {
+			  method: 'POST',
+			  headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			  },
+			  body: JSON.stringify({nickName:data}),
 		 })
-		.then(rep => rep.json()
+		.then(rep => {
+			console.log("REP", rep);
+			return rep.json()
+			}
 		)
 		.then(datas => {
 			console.log(datas);
@@ -154,7 +162,11 @@ class App extends React.Component {
   }
   
   getRandomChat(e, data) {
-	  fetch('http://localhost:3333/chat/'+data)
+	  if(!data || data.trim() == '') {
+		  console.log("NNNOOOOOOOOOOOOOOOOOOOOOOOOooo");
+		  return;
+	  }
+	  fetch('/chat/'+data)
 	  .then(rep => rep.text())
 	  .then(datas => {
 		 console.log(data); 
@@ -173,12 +185,12 @@ class App extends React.Component {
 	  });
   }
   
-  onBotClicked(e: Event) {
+  onBotClicked(e) {
 	  console.log(e.target);
 	  const botId = $(e.target).attr('data-val');
 	  this.setState({isVisible:false});
 	  
-	  fetch('http://localhost:3333/bot/'+botId)
+	  fetch('/bot/'+botId)
 	  .then(rep => rep.json())
 	  .then(data => {
 		 var newState = Object.assign({}, this.state, {});
@@ -212,10 +224,11 @@ class App extends React.Component {
 				 />
 			 )
 	  }
+	  var style_img = {witdh:"50px",height:"50px"};
       return (
         <div className="App">
           <div className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
+            <img src={logo} style={style_img} className="App-logo" alt="logo" />
             <h2>환영합니다.</h2>
           </div>
           <BotSelect value={this.state.bots} isVisible={this.state.isVisible}
