@@ -160,7 +160,11 @@ public class ExampleInsertRunner implements CommandLineRunner {
         Choices normal = new Choices("그저 그래.", ac5.getContentId(), ChoiceType.BUTTON);
         Choices bad = new Choices("맞지 않아", ac8.getContentId(), ChoiceType.BUTTON);
         ac41.setChoices(Lists.newArrayList(good, normal, bad));
-        ac41.setChoices(Lists.newArrayList(good, normal, bad));
+        
+        Choices good2 = new Choices("맞는 거 같아.", ac6.getContentId(), ChoiceType.BUTTON);
+        Choices normal2 = new Choices("그저 그래.", ac5.getContentId(), ChoiceType.BUTTON);
+        Choices bad2 = new Choices("맞지 않아", ac8.getContentId(), ChoiceType.BUTTON);
+        ac42.setChoices(Lists.newArrayList(good2, normal2, bad2));
         
         Choices money = new Choices("여기 10만원", ac61.getContentId(), ChoiceType.BUTTON);
         Choices nomony = new Choices("나 돈 없어. 나중에.", ac62.getContentId(), ChoiceType.BUTTON);
@@ -170,7 +174,9 @@ public class ExampleInsertRunner implements CommandLineRunner {
         Choices notext = new Choices("", ac52.getContentId(), ChoiceType.NONE);
         ac5.setChoices(Lists.newArrayList(text, notext));
         
-        ac52.setChoices(Lists.newArrayList(text, notext));
+        Choices text2 = new Choices("", ac51.getContentId(), ChoiceType.TEXT);
+        Choices notext2 = new Choices("", ac52.getContentId(), ChoiceType.NONE);
+        ac52.setChoices(Lists.newArrayList(text2, notext2));
     }
         
     

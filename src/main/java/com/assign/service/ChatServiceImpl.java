@@ -12,11 +12,13 @@ import org.springframework.stereotype.Service;
 import com.assign.domain.BotActionContent;
 import com.assign.domain.BotActions;
 import com.assign.domain.Bots;
+import com.assign.domain.ChoiceType;
 import com.assign.domain.Choices;
 import com.assign.repository.ActionContentRepository;
 import com.assign.repository.BotActionsRepository;
 import com.assign.repository.BotsRepository;
 import com.assign.repository.ChoicesRepository;
+import com.assign.util.SimpleChatDispatcher;
 
 @Service
 public class ChatServiceImpl implements ChatService {
@@ -31,6 +33,8 @@ public class ChatServiceImpl implements ChatService {
     private BotActionsRepository actionRepository;
     @Autowired
     private ChoicesRepository choiceRepository;
+    @Autowired
+    private SimpleChatDispatcher simpleChatDispatcher;
     
     @PostConstruct
     public void postConstruct() {
@@ -77,13 +81,25 @@ public class ChatServiceImpl implements ChatService {
             Choices choosenChoice = null;
             choosenChoice = choices.stream().filter(c -> c.getChoiceId() == choiceId).findFirst().get();
             
+           
             logger.info("{} is choosenChoice", choosenChoice);
             logger.info("{} is findBychoice", findByChoiceId);
             
-            return contentRepository.findByContentId(choosenChoice.getNextContentId());
+            BotActionContent nextContents = contentRepository.findByContentId(choosenChoice.getNextContentId());
+            
+            if(choosenChoice.getChoiceType().equals(ChoiceType.NAME)) {
+                nextContents.setContentString(data+"가 상대 이름이구나..., "+ nextContents.getContentString());
+            }
+            
+            return nextContents;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public String getRandomChat(String typed) {
+        return simpleChatDispatcher.getSimpleChatString(typed);
     }
 }
