@@ -91,6 +91,10 @@ public class ChatServiceImpl implements ChatService {
                 nextContents.setContentString(data+"가 상대 이름이구나..., "+ nextContents.getContentString());
             }
             
+            if(choosenChoice.getChoiceType().equals(ChoiceType.TEXT)) {
+                nextContents.setContentString(data+"가 더 알고싶구나....., "+ nextContents.getContentString());
+            }
+            
             return nextContents;
         } catch (Exception e) {
             e.printStackTrace();

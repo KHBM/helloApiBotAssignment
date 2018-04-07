@@ -96,10 +96,10 @@ class App extends React.Component {
 		 })
 		.then(rep => rep.json()
 		)
-		.then(data => {
-			console.log(data);
+		.then(datas => {
+			console.log(datas);
 			var newState = Object.assign({}, this.state, {})
-			/*if(newState.type == 'TEXT' || newState.type == 'NONE') {
+			if(newState.type == 'TEXT' || newState.type == 'NONE') {
 			 newState.chats.push(
 			 {
 				 name:'당신',
@@ -112,32 +112,43 @@ class App extends React.Component {
 				 chats:'그 사람은 ' + data + ' 라 부르면 돼'
 			 });
 			} else if(newState.type == 'BUTTON') {
+			 var btnText = null;
 			 $.each(newState.choices, (i, e) => {
-				console.log(i, e); 
+				console.log(i, e);
+				if(e.choiceId == data) {
+					btnText = e.choiceText;
+				}
 			 });
 			 newState.chats.push(
 			 {
 				 name:'당신',
-				 chats:'그 사람은 ' + data + ' 라 부르면 돼'
+				 chats:btnText
 			 });
-			}*/
-			 newState.type=data.nextChoiceType;
-			 newState.choices = data.choices;
+			}
+			 newState.type=datas.nextChoiceType;
+			 newState.choices = datas.choices;
 			 
 			 
 			 newState.chats.push(
 			 {
 				 name:newState.botName,
-				 chats:data.contentString
+				 chats:datas.contentString
 			 });
 			 this.setState(newState);
 		})
 		.catch(e => {
 			var newState = Object.assign({}, this.state, {})
-			newState.chats.push({
+			if(newState.type != 'NAME') {
+				newState.chats.push({
 						chats:"준비가 덜 되었어",
 						name:newState.botName
 					  });
+			} else {
+				newState.chats.push({
+						chats:"닉네임을 입력해줘",
+						name:newState.botName
+					  });
+			}
 			this.setState(newState);
 		});
   }
