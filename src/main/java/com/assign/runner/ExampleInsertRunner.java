@@ -272,8 +272,8 @@ public class ExampleInsertRunner implements CommandLineRunner {
     }
     
     private List<Bots> insertTwoBots() {
-        Bots bot1 = createBots("라라", "This bot is the bot", "Sorry/There is no chance to see me again", ContentType.NONE);
-        Bots bot2 = createBots("새새", "Angry dog bird", "Sorry guy/Go away", ContentType.NONE);
+        Bots bot1 = createBots("라라", "안녕하세요, 2302살 먹은 라라님 되십니다. 운을 점쳐드려요.", "Sorry/There is no chance to see me again", ContentType.NONE);
+        Bots bot2 = createBots("새새", "안녕하신가! 난 독설가요, 어디 어떤 말을 해주까?", "Sorry guy/Go away", ContentType.NONE);
         
         // Top beers from https://www.beeradvocate.com/lists/top/
         Stream.of(bot1, bot2).forEach(bot -> {
