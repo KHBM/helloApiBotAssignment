@@ -13,7 +13,7 @@ class ChoiceViewer extends React.Component {
 	  if(type == 'NONE') {
 		  return (
 			  <div>
-				<button onClick={this.props.requestActions}> action </button>
+				<button onClick={this.props.requestActions}> 메뉴 </button>
 				<input id="randomText" type="input" />
 				<button onClick={(e) => {this.props.requestFreeChat(e, $('#randomText').val()); $('#randomText').val('')}}>send</button>
 			  </div>
@@ -65,7 +65,7 @@ class ChoiceViewer extends React.Component {
 	  } else if(type == 'TEXT') {
 		  return (
 			  <div>
-				<button onClick={(e) => {this.props.preventTalkingFromStop()}}> action </button>
+				<button onClick={(e) => {this.props.preventTalkingFromStop()}}> 메뉴 </button>
 				<input id="textQuestion" type="input" />
 				<button onClick={(e) => {this.props.requestNextContent(e, choices[0].contentId, choices[0].choiceId, $('#textQuestion').val()); $('#textQuestion').val('')}}>send</button>
 			  </div>

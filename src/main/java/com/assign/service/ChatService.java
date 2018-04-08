@@ -25,5 +25,5 @@ public interface ChatService {
     
     BotActionContent getNextActionContent(int contentId, int choiceId, String data);
 
-    String getRandomChat(String typed);
+    String getRandomChat(int botId, String typed);
 }

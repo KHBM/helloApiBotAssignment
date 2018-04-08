@@ -30068,7 +30068,7 @@ var App = function (_React$Component) {
 				console.log("NNNOOOOOOOOOOOOOOOOOOOOOOOOooo");
 				return;
 			}
-			fetch('/chat/' + data).then(function (rep) {
+			fetch('/chat/' + this.state.botId + '/' + data).then(function (rep) {
 				return rep.text();
 			}).then(function (datas) {
 				console.log(data);
@@ -30940,7 +30940,7 @@ var ChoiceViewer = function (_React$Component) {
 					React.createElement(
 						'button',
 						{ onClick: this.props.requestActions },
-						' action '
+						' \uBA54\uB274 '
 					),
 					React.createElement('input', { id: 'randomText', type: 'input' }),
 					React.createElement(
@@ -31026,7 +31026,7 @@ var ChoiceViewer = function (_React$Component) {
 						{ onClick: function onClick(e) {
 								_this2.props.preventTalkingFromStop();
 							} },
-						' action '
+						' \uBA54\uB274 '
 					),
 					React.createElement('input', { id: 'textQuestion', type: 'input' }),
 					React.createElement(

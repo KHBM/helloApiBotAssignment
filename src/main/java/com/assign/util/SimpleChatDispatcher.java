@@ -1,6 +1,7 @@
 package com.assign.util;
 
 import java.security.SecureRandom;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -18,9 +19,10 @@ public class SimpleChatDispatcher implements ChatDispatcher {
     private SecureRandom random = new SecureRandom();
     
     @Override
-    public String getSimpleChatString(String userInput) {
+    public String getSimpleChatString(String userInput, List<String> chatList) {
         
         String answer = null;
+        
         
         if(userInput.contains("사랑")) {
             answer = "사랑해";
@@ -28,10 +30,14 @@ public class SimpleChatDispatcher implements ChatDispatcher {
             answer = "정말로?";
         }
         
+        
         if(answer == null) {
-        
-            int seed = random.nextInt();
-        
+            
+            int seed = random.nextInt(chatList.size());
+            if(!chatList.isEmpty()) {
+                return chatList.get(seed);
+            }        
+            
             switch(seed % 10) {
                 case 0:
                     answer = "♥";

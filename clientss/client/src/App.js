@@ -166,7 +166,7 @@ class App extends React.Component {
 		  console.log("NNNOOOOOOOOOOOOOOOOOOOOOOOOooo");
 		  return;
 	  }
-	  fetch('/chat/'+data)
+	  fetch('/chat/'+this.state.botId+'/'+data)
 	  .then(rep => rep.text())
 	  .then(datas => {
 		 console.log(data); 

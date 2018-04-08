@@ -11,12 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.assign.domain.BotActionContent;
 import com.assign.domain.BotActions;
+import com.assign.domain.BotChats;
 import com.assign.domain.Bots;
 import com.assign.domain.ChoiceType;
 import com.assign.domain.Choices;
 import com.assign.domain.ContentType;
 import com.assign.repository.ActionContentRepository;
 import com.assign.repository.BotActionsRepository;
+import com.assign.repository.BotChatsRepository;
 import com.assign.repository.BotsRepository;
 import com.assign.repository.ChoicesRepository;
 import com.google.common.collect.Lists;
@@ -36,15 +38,18 @@ public class ExampleInsertRunner implements CommandLineRunner {
     private final BotActionsRepository actionRepository;
     private final ActionContentRepository contentRepository;
     private final ChoicesRepository choiceRepository;
+    private final BotChatsRepository botChatRepository;
     
     
     public ExampleInsertRunner(BotsRepository repository, BotActionsRepository actionRepository,
             ActionContentRepository contentRepository,
-            ChoicesRepository choiceRepository) {
+            ChoicesRepository choiceRepository,
+            BotChatsRepository botChatRepository) {
         this.botRepository = repository;
         this.actionRepository = actionRepository;
         this.contentRepository = contentRepository;
         this.choiceRepository = choiceRepository;
+        this.botChatRepository = botChatRepository;
     }
     
     
@@ -55,6 +60,9 @@ public class ExampleInsertRunner implements CommandLineRunner {
         
         List<BotActions> bot1Actions = insertActionOf(allBots.get(0));
         List<BotActions> bot2Actions = insertActionOf2(allBots.get(1));
+        
+        createBotChats1(allBots.get(0).getBotId());
+        createBotChats2(allBots.get(1).getBotId());
         
         bot1Actions.stream().filter(a -> {
             return a.isOpen();
@@ -278,8 +286,8 @@ public class ExampleInsertRunner implements CommandLineRunner {
     }
     
     private List<Bots> insertTwoBots() {
-        Bots bot1 = createBots("라라", "안녕하세요, 2302살 먹은 라라님 되십니다. 운을 점쳐드려요.", "Sorry/There is no chance to see me again", ContentType.NONE);
-        Bots bot2 = createBots("새새", "안녕하신가! 난 독설가요, 어디 어떤 말을 해주까?", "Sorry guy/Go away", ContentType.NONE);
+        Bots bot1 = createBots("라라", "안녕하세요, 2302살 먹은 라라님 되십니다. 운을 점쳐드려요. 메뉴를 이용해 봐요.", "Sorry/There is no chance to see me again", ContentType.NONE);
+        Bots bot2 = createBots("새새", "안녕하신가! 난 독설가요, 어디 어떤 말을 해주까? 메뉴 이용해 봐.", "Sorry guy/Go away", ContentType.NONE);
         
         // Top beers from https://www.beeradvocate.com/lists/top/
         Stream.of(bot1, bot2).forEach(bot -> {
@@ -290,6 +298,24 @@ public class ExampleInsertRunner implements CommandLineRunner {
         allBots.forEach(System.out::println);
         
         return allBots;
+    }
+    
+    private void createBotChats1(final int botId) {
+        Stream.of("♥", "고민이 많구나..", "본 메시지는 자동응답되었습니다.", "심심해", "이거 제작자 상당한 흔남이라던데...",
+                "너 뭐야, 방구 꼈지?", "안 생겨요", "그래도 안 생겨요", "すみません。。。、韓国語で話せません。",
+                "미안해 못 알아듣겠어").forEach(txt -> {
+                    BotChats chat = new BotChats(txt, botId); 
+                    botChatRepository.save(chat);
+        });
+    }
+    
+    private void createBotChats2(final int botId) {
+        Stream.of("잠좀 자자", "왜 불러", "한가하냐?", "저리 가서 놀아", "내 이름은 새새",
+                "나 트름한다? 절루가", "모르겠어", "할말 있으면 메뉴를 클릭해", "うんこ",
+                "동해물과 백두산이 마르고 닳도록 맞자").forEach(txt -> {
+                    BotChats chat = new BotChats(txt, botId); 
+                    botChatRepository.save(chat);
+        });
     }
     
     private Bots createBots(String name, String desc, String byeMessage, ContentType type) {

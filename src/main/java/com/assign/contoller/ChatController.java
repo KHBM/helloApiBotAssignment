@@ -89,10 +89,10 @@ public class ChatController {
     
     @GetMapping(RequestURLs.GET_FREE_CHAT)
     @CrossOrigin(origins = "http://localhost:3000")
-    public String getRandomChat(@PathVariable("data") String typed) {
+    public String getRandomChat(@PathVariable("botId")int botId, @PathVariable("data") String typed) {
         try {
             logger.debug("random chat made by {}", typed);
-            return chatService.getRandomChat(typed);
+            return chatService.getRandomChat(botId, typed);
         } catch (Exception e) {
             e.printStackTrace();
             return "공백은 적지마";

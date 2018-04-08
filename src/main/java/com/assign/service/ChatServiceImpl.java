@@ -12,14 +12,17 @@ import org.springframework.stereotype.Service;
 
 import com.assign.domain.BotActionContent;
 import com.assign.domain.BotActions;
+import com.assign.domain.BotChats;
 import com.assign.domain.Bots;
 import com.assign.domain.ChoiceType;
 import com.assign.domain.Choices;
 import com.assign.repository.ActionContentRepository;
 import com.assign.repository.BotActionsRepository;
+import com.assign.repository.BotChatsRepository;
 import com.assign.repository.BotsRepository;
 import com.assign.repository.ChoicesRepository;
 import com.assign.util.ChatDispatcher;
+import com.google.common.collect.Lists;
 
 @Service
 public class ChatServiceImpl implements ChatService {
@@ -34,6 +37,8 @@ public class ChatServiceImpl implements ChatService {
     private BotActionsRepository actionRepository;
     @Autowired
     private ChoicesRepository choiceRepository;
+    @Autowired
+    private BotChatsRepository botChatsRepository;
     @Autowired
     private ChatDispatcher simpleChatDispatcher;
     
@@ -111,7 +116,13 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public String getRandomChat(String typed) {
-        return simpleChatDispatcher.getSimpleChatString(typed);
+    public String getRandomChat(int botId, String typed) {
+        List<BotChats> botChats = botChatsRepository.findByBotId(botId);
+        if(botChats != null) {
+            List<String> botChatStringList = Lists.transform(botChats, bc -> bc.getChatString());
+            return simpleChatDispatcher.getSimpleChatString(typed, botChatStringList);
+        } else {
+            return simpleChatDispatcher.getSimpleChatString(typed, Lists.newArrayList());
+        }
     }
 }
