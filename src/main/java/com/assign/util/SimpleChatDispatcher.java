@@ -4,20 +4,31 @@ import java.security.SecureRandom;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * Response any chat string randomly.
+ * For some special string, it will give a specific string to user.
+ * 
+ * In this simple implementation, it just gives chats by modular result.
+ * @author kimilb
+ *
+ */
 @Component
-public class SimpleChatDispatcher {
+public class SimpleChatDispatcher implements ChatDispatcher {
 
     private SecureRandom random = new SecureRandom();
     
+    @Override
     public String getSimpleChatString(String userInput) {
         
-        String answer = "미안해 못 알아듣겠어";
+        String answer = null;
         
         if(userInput.contains("사랑")) {
             answer = "사랑해";
         } else if (userInput.contains("싫어")) {
             answer = "정말로?";
-        } else {
+        }
+        
+        if(answer == null) {
         
             int seed = random.nextInt();
         
@@ -50,11 +61,11 @@ public class SimpleChatDispatcher {
                     answer = "すみません。。。、韓国語で話せません。";
                     break;
                 case 9:
-                    break;
+                default:
+                    answer = "미안해 못 알아듣겠어";
                
             }
         }
-        
         return answer;
     }
 }

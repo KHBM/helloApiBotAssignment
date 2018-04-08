@@ -21,6 +21,12 @@ import com.assign.repository.BotsRepository;
 import com.assign.repository.ChoicesRepository;
 import com.google.common.collect.Lists;
 
+/**
+ * Runs in finishing starting server for the first time.
+ * This will make chatting data and store it into h2 database.
+ * @author kimilb
+ *
+ */
 @Component
 public class ExampleInsertRunner implements CommandLineRunner {
     

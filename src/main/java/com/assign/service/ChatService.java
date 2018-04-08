@@ -6,6 +6,11 @@ import com.assign.domain.BotActionContent;
 import com.assign.domain.BotActions;
 import com.assign.domain.Bots;
 
+/**
+ * Chat service that interacts with repositories.
+ * @author kimilb
+ *
+ */
 public interface ChatService {
 
     List<Bots> getAllBots();

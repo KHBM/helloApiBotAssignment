@@ -19,7 +19,7 @@ import com.assign.repository.ActionContentRepository;
 import com.assign.repository.BotActionsRepository;
 import com.assign.repository.BotsRepository;
 import com.assign.repository.ChoicesRepository;
-import com.assign.util.SimpleChatDispatcher;
+import com.assign.util.ChatDispatcher;
 
 @Service
 public class ChatServiceImpl implements ChatService {
@@ -35,7 +35,7 @@ public class ChatServiceImpl implements ChatService {
     @Autowired
     private ChoicesRepository choiceRepository;
     @Autowired
-    private SimpleChatDispatcher simpleChatDispatcher;
+    private ChatDispatcher simpleChatDispatcher;
     
     private SecureRandom random = new SecureRandom();
     

@@ -9,11 +9,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.assign.bean.NickData;
@@ -21,9 +19,14 @@ import com.assign.constant.RequestURLs;
 import com.assign.domain.BotActionContent;
 import com.assign.domain.BotActions;
 import com.assign.domain.Bots;
-import com.assign.domain.Choices;
 import com.assign.service.ChatService;
 
+/**
+ * Main key rest controller.
+ * This will provide chat bot's key functions.
+ * @author kimilb
+ *
+ */
 @RestController
 @RequestMapping("/")
 public class ChatController {
@@ -37,6 +40,7 @@ public class ChatController {
     @CrossOrigin(origins = "http://localhost:3000")
     public List<Bots> getBots() {
         
+        logger.debug("All Bot retrieved");
         return chatService.getAllBots();
     }
     
@@ -44,6 +48,7 @@ public class ChatController {
     @CrossOrigin(origins = "http://localhost:3000")
     public Bots getBot(@PathVariable("bot")int botId) {
         
+        logger.debug("{} Bot retrieved", botId);
         return chatService.getBot(botId);
     }
     
@@ -51,6 +56,7 @@ public class ChatController {
     @CrossOrigin(origins = "http://localhost:3000")
     public List<BotActions> getActions(@PathVariable("bot")int botId) {
         
+        logger.debug("Bot({}) actions retrieved", botId);
         return chatService.getBotActions(botId);
     }
     
@@ -58,15 +64,15 @@ public class ChatController {
     @CrossOrigin(origins = "http://localhost:3000")
     public BotActionContent getActionContent(@PathVariable("bot")int botId, @PathVariable("action")int actionId) {
         
+        logger.debug("Bot({}) actions({}) retrieved", botId, actionId);
         return chatService.getActionContent(botId, actionId);
     }
     
-    //FIXME: csrf info prevents this controller from being called by other browser.
     @PostMapping(RequestURLs.FETCH_NEXT_CONTENT)
     public BotActionContent fetchNextContent(@PathVariable("contentId")int contentId, @PathVariable("choiceId")int choiceId,
             @RequestBody NickData choiceData) {
         
-        //FIXME: Should I have to consider the type of choice made?
+        logger.debug("content({}) choice({}) retrieved with data {}", contentId, choiceId, choiceData);
         return chatService.getNextActionContent(contentId, choiceId, choiceData.getNickName());
         
     }
@@ -76,6 +82,7 @@ public class ChatController {
     public BotActionContent fetchNextContents(@PathVariable("contentId")int contentId, @PathVariable("choiceId")int choiceId,
             @PathVariable("data") String choiceData) {
         
+        logger.debug("content({}) choice({}) retrieved with data {}", contentId, choiceId, choiceData);
         return chatService.getNextActionContent(contentId, choiceId, choiceData);
         
     }
@@ -84,6 +91,7 @@ public class ChatController {
     @CrossOrigin(origins = "http://localhost:3000")
     public String getRandomChat(@PathVariable("data") String typed) {
         try {
+            logger.debug("random chat made by {}", typed);
             return chatService.getRandomChat(typed);
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,5 +1,10 @@
 package com.assign.bean;
 
+/**
+ * Bean for receiving user custom nickname input.
+ * @author kimilb
+ *
+ */
 public class NickData {
 
     private String nickName;
